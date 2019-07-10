@@ -42,8 +42,7 @@ namespace Exercises.Easy
                 Assert.Equal(expected, actual);
             });
 
-            var timeout = 1000;
-            var completed = Task.WaitAny(new Task[] { solveTask }, timeout);
+            var completed = Task.WaitAny(new Task[] { solveTask }, millisecondsTimeout: 500);
             Assert.True(0 == completed, "The solution took too much to execute");
         }
     }
