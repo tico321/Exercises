@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Xunit;
 
-namespace Exercises
+namespace Exercises.Medium
 {
     /// <summary>
     /// Given an input array, sort the content by frecuency and value.
