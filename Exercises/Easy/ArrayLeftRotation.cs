@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -45,7 +43,7 @@ namespace Exercises.Easy
                 Assert.Equal(expected, actual);
             });
 
-            var completed = Task.WaitAny(new Task[] { solveTask }, millisecondsTimeout: 500);
+            var completed = Task.WaitAny(new Task[] { solveTask }, millisecondsTimeout: 1000);
             Assert.True(0 == completed, "The solution took too much to execute");
         }
     }
