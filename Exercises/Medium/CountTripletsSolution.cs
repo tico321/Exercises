@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Exercises.Medium
 {
@@ -38,38 +37,6 @@ namespace Exercises.Medium
             }
 
             return tripletCount;
-        }
-
-        private List<long> GetNextPositions(
-            Dictionary<long, List<long>> arrPosDictionary,
-            long currentValuePos,
-            long next)
-        {
-            var result = new List<long>();
-            if (!arrPosDictionary.ContainsKey(next)) return result;
-            var nextPositions = arrPosDictionary[next].ToList();
-            foreach (var nextPos in nextPositions)
-            {
-                if (nextPos < currentValuePos) continue; //it's not progressive
-                result.Add(nextPos);
-            }
-
-            return result;
-        }
-
-        private void AddToDictionary(
-            Dictionary<long, List<long>> arrPos,
-            long value,
-            long i)
-        {
-            if (arrPos.ContainsKey(value))
-            {
-                arrPos[value].Add(i);
-            }
-            else
-            {
-                arrPos[value] = new List<long> { i };
-            }
         }
     }
 }

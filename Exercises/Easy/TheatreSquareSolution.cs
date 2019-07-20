@@ -2,23 +2,28 @@
 {
     public class TheatreSquareSolution
     {
-        public int Solve(int n, int m, int a)
+        public static long Solve(long n, long m, long a)
         {
-            var horizontalFlagstones = 0;
-            do
-            {
-                n -= a;
-                horizontalFlagstones++;
-            } while (n > 0);
-
-            var verticalFlagstones = 0;
-            do
-            {
-                m -= a;
-                verticalFlagstones++;
-            } while (m > 0);
+            var horizontalFlagstones = GetFlagstones(n, a);
+            var verticalFlagstones = GetFlagstones(m, a);
 
             return horizontalFlagstones * verticalFlagstones;
+        }
+
+        private static long GetFlagstones(long side, long a)
+        {
+            long flagstones;
+            if (side <= a)
+            {
+                flagstones = 1;
+            }
+            else
+            {
+                flagstones = side / a;
+                if (side % a > 0) flagstones++;
+            }
+
+            return flagstones;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Exercises.Easy
 
         Input
         The input contains three positive integer numbers in the first line:
-        n,  m and a (1 ≤  n, m, a ≤ 109).
+        n,  m and a (1 ≤  n, m, a ≤ 10^9).
 
         Output
         Write the needed number of flagstones.
@@ -25,9 +25,11 @@ namespace Exercises.Easy
         [Theory]
         [InlineData(6, 6, 4, 4)]
         [InlineData(2, 2, 4, 1)]
-        public void Scenarios(int m, int n, int a, int expected)
+        [InlineData(1, 1, 1, 1)]
+        [InlineData(1000000000, 1000000000, 1, 1000000000000000000)]
+        public void Scenarios(long m, long n, long a, long expected)
         {
-            var actual = new TheatreSquareSolution().Solve(m, n, a);
+            var actual = TheatreSquareSolution.Solve(m, n, a);
 
             Assert.Equal(expected, actual);
         }
