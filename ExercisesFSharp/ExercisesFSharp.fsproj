@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Easy.Solutions.fs" />
+    <Compile Include="Easy.fs" />
     <Compile Include="Medium.Solutions.fs" />
     <Compile Include="Medium.fs" />
     <Compile Include="Program.fs" />
