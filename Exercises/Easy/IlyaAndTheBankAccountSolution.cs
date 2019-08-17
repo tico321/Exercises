@@ -1,13 +1,15 @@
-﻿namespace Exercises.Easy
+﻿using System;
+
+namespace Exercises.Easy
 {
-    public class IlyaAndTheBankAccountSolution
+    public static class IlyaAndTheBankAccountSolution
     {
         public static string Solve(string input)
         {
             if (input[0] != '-') return input;
             var option1 = input.Remove(input.Length - 1);
             var option2 = $"{input.Substring(0, input.Length - 2)}{input[input.Length - 1]}";
-            var compare = option1.CompareTo(option2);
+            var compare = string.Compare(option1, option2, StringComparison.Ordinal);
             var result = compare < 0 ? option1 : option2;
             return result != "-0" ? result : "0";
         }

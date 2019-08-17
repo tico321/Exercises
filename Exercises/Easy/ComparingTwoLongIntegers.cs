@@ -33,7 +33,21 @@ namespace Exercises.Easy
         [InlineData("0123", "9", ">")]
         [InlineData("0", "0000", "=")]
         [InlineData("00000000", "0000", "=")]
-        public void Scenarios(string input1, string input2, string expected)
+        public void Scenarios1(string input1, string input2, string expected)
+        {
+            var actual = ComparingTwoLongIntegersSolution.Solve(input1, input2);
+
+            Assert.Equal(expected, actual);
+        }
+        
+        [Theory]
+        [InlineData("9", "10", "<")]
+        [InlineData("11", "10", ">")]
+        [InlineData("00012345", "12345", "=")]
+        [InlineData("0123", "9", ">")]
+        [InlineData("0", "0000", "=")]
+        [InlineData("00000000", "0000", "=")]
+        public void Scenarios2(string input1, string input2, string expected)
         {
             var actual = ComparingTwoLongIntegersSolution.Solve2(input1, input2);
 

@@ -63,7 +63,7 @@ namespace Exercises.DataStructures
                 }
             }
 
-            return (true == true).ToProperty();
+            return (true).ToProperty();
         }
 
         public enum PriorityQueueTestOperations

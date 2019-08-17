@@ -1,13 +1,15 @@
-﻿namespace Exercises.Easy
+﻿using System;
+
+namespace Exercises.Easy
 {
-    public class ComparingTwoLongIntegersSolution
+    public static class ComparingTwoLongIntegersSolution
     {
         public static string Solve(string a, string b)
         {
             var length = a.Length > b.Length ? a.Length : b.Length;
             a = a.PadLeft(length, '0');
             b = b.PadLeft(length, '0');
-            var compare = a.CompareTo(b);
+            var compare = string.Compare(a, b, StringComparison.Ordinal);
             if (compare == 0) return "=";
             if (compare > 0) return ">";
             return "<";

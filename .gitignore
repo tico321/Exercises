@@ -7,6 +7,9 @@
 *.userosscache
 *.sln.docstates
 
+# vs code
+/symbolCache.db
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -234,3 +237,7 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+/Exercises.sln
+
+# Rider
+.idea/**

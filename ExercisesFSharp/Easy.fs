@@ -14,4 +14,3 @@ module Tests =
         let arr = strArr.Split ' ' |> Array.map (fun c -> c |> int)
         let actual = MinimumAbsoluteDifference arr
         Assert.Equal(expected, actual)
-

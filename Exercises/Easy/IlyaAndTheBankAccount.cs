@@ -27,7 +27,19 @@ namespace Exercises.Easy
         [InlineData("-10", "0")]
         [InlineData("-100003", "-10000")]
         [InlineData("-836078769", "-83607876")]
-        public void Scenarios(string input, string expected)
+        public void Scenarios1(string input, string expected)
+        {
+            var actual = IlyaAndTheBankAccountSolution.Solve(input);
+
+            Assert.Equal(expected, actual);
+        }
+        
+        [Theory]
+        [InlineData("2230", "2230")]
+        [InlineData("-10", "0")]
+        [InlineData("-100003", "-10000")]
+        [InlineData("-836078769", "-83607876")]
+        public void Scenarios2(string input, string expected)
         {
             var actual = IlyaAndTheBankAccountSolution.Solve2(input);
 
