@@ -22,9 +22,23 @@ namespace Exercises.Medium
         [InlineData(5, "asasd", 7)] // [a, s, a, s, d, asa, sas]
         [InlineData(7, "abcbaba", 10)] // [a, b, c, b, a, b, a, bcb, bab, aba]
         [InlineData(4, "aaaa", 10)] //[a, a, a, a, aa, aa, aa, aaa, aaa, aaa]
+        [InlineData(5, "cabac", 6)]
         public void Scenarios(int n, string s, int expected)
         {
             var actual = SpecialStringSolution.Solve(n, s);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(8, "mnonopoo", 12)]
+        [InlineData(5, "asasd", 7)] // [a, s, a, s, d, asa, sas]
+        [InlineData(7, "abcbaba", 10)] // [a, b, c, b, a, b, a, bcb, bab, aba]
+        [InlineData(4, "aaaa", 10)] //[a, a, a, a, aa, aa, aa, aaa, aaa, aaa]
+        [InlineData(5, "cabac", 6)]
+        public void Scenarios2(int n, string s, int expected)
+        {
+            var actual = SpecialStringSolution.Solve2(n, s);
 
             Assert.Equal(expected, actual);
         }
