@@ -241,3 +241,4 @@ _Pvt_Extensions
 
 # Rider
 .idea/**
+.ionide/symbolCache.db
