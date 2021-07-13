@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace ClassicComputerScienceProblems
 {
     // DFS, BFS and A* search implementations.
-    public class L2_2_2_GenericSearch
+    public static class L2_2_2_GenericSearch
     {
         /*
          * DFS. A search that goes as deeply as it can before backtracking to its last decision point if it reaches a dead end.
@@ -203,9 +203,9 @@ namespace ClassicComputerScienceProblems
 
             public T State { get; }
             public Node<T> Parent { get; }
-            public double Cost { get; set; }
-            public double Heuristic { get; set; }
-            public double TotalCost { get; set; }
+            public double Cost { get; }
+            public double Heuristic { get; }
+            public double TotalCost { get; }
 
             // CompareTo maybe needed for the priority queue in A*
             public int CompareTo(Node<T> other)

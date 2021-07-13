@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using static ClassicComputerScienceProblems.L3_1_ConstraintSatisfactionProblems;
 
 namespace ClassicComputerScienceProblems
 {
@@ -19,14 +20,14 @@ namespace ClassicComputerScienceProblems
         [Fact]
         public void Solve()
         {
-            L3_1_ConstraintSatisfactionProblems.CSP<char, int> csp = new (Variables, Domain);
+            CSP<char, int> csp = new (Variables, Domain);
             csp.AddConstraint(new SendMoreMoneyConstraint(Variables));
-            
+
             var actual = csp.BacktrackingSearch();
-            
+
             Assert.NotEmpty(actual);
         }
-        
+
         // characters are the variables
         public static readonly List<char> Variables = new() { 'S', 'E', 'N', 'D', 'M', 'O', 'R', 'Y' };
         // the domain are the possible digits foreach character
@@ -34,13 +35,13 @@ namespace ClassicComputerScienceProblems
         private static readonly List<int> One = new() {1};
         public static readonly IDictionary<char, List<int>> Domain = Variables
             .ToDictionary(
-                v => v, 
+                v => v,
                 v => v == 'M' ?
                     // because of how our constraint is implemented we predefine the solution for M with 1
-                    One :  
+                    One :
                     Digits);
-        
-        public class SendMoreMoneyConstraint : L3_1_ConstraintSatisfactionProblems.Constraint<char, int>
+
+        public class SendMoreMoneyConstraint : Constraint<char, int>
         {
             public SendMoreMoneyConstraint(List<char> variables)
             {
@@ -53,10 +54,10 @@ namespace ClassicComputerScienceProblems
             {
                 // We return true so a partial continues to be worked on.
                 if (assignment.Count != Variables.Count) return true;
-                
+
                 // if there are duplicates is not a solution
                 if (new HashSet<int>(assignment.Values).Count < Variables.Count) return false;
-                
+
                 // // if all variables have been assigned, check if it adds correctly
                 var s = assignment['S'];
                 var e = assignment['E'];

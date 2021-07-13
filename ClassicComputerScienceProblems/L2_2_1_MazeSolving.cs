@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using Xunit.Abstractions;
+using static ClassicComputerScienceProblems.L2_2_2_GenericSearch;
 
 namespace ClassicComputerScienceProblems
 {
@@ -38,7 +39,7 @@ namespace ClassicComputerScienceProblems
         {
             var maze = new Maze();
 
-            maze.DeepFirstSearch();
+            maze.SolveWithDeepFirstSearch();
             var actual = maze.ToString();
 
             Assert.Contains("P", actual);
@@ -49,7 +50,7 @@ namespace ClassicComputerScienceProblems
         {
             var maze = new Maze();
 
-            maze.BreadthFirstSearch();
+            maze.SolveWithBreadthFirstSearch();
             var actual = maze.ToString();
 
             Assert.Contains("P", actual);
@@ -60,7 +61,7 @@ namespace ClassicComputerScienceProblems
         {
             var maze = new Maze();
 
-            maze.AStarSearch();
+            maze.SolveWithAStarSearch();
             var actual = maze.ToString();
 
             Assert.Contains("P", actual);
@@ -71,19 +72,19 @@ namespace ClassicComputerScienceProblems
         {
             var maze = new Maze();
 
-            maze.DeepFirstSearch();
+            maze.SolveWithDeepFirstSearch();
             var dfs = maze.ToString();
             _testOutputHelper.WriteLine("dfs");
             _testOutputHelper.WriteLine(dfs);
             maze.ClearPath();
 
-            maze.BreadthFirstSearch();
+            maze.SolveWithBreadthFirstSearch();
             var bfs = maze.ToString();
             _testOutputHelper.WriteLine("bfs");
             _testOutputHelper.WriteLine(bfs);
             maze.ClearPath();
 
-            maze.AStarSearch();
+            maze.SolveWithAStarSearch();
             var aStar = maze.ToString();
             _testOutputHelper.WriteLine("aStar");
             _testOutputHelper.WriteLine(aStar);
@@ -105,7 +106,9 @@ namespace ClassicComputerScienceProblems
             private readonly MazeLocation _start;
             private readonly Cell[,] _grid;
 
-            public Maze() : this(10, 10, new MazeLocation(0, 0), new MazeLocation(9, 9), 0.2) { }
+            public Maze() : this(10, 10, new MazeLocation(0, 0), new MazeLocation(9, 9), 0.2)
+            {
+            }
 
             public Maze(int rows, int columns, MazeLocation start, MazeLocation goal, double sparseness)
             {
@@ -158,13 +161,15 @@ namespace ClassicComputerScienceProblems
             public List<MazeLocation> Successors(MazeLocation ml)
             {
                 var locations = new List<MazeLocation>();
-                if (ml.Row + 1 < _rows && _grid[ml.Row + 1, ml.Column] != Cell.Blocked)
-                    locations.Add(new MazeLocation(ml.Row + 1, ml.Column));
-                if (ml.Row - 1 >= 0 && _grid[ml.Row - 1, ml.Column] != Cell.Blocked) locations.Add(new MazeLocation(ml.Row - 1, ml.Column));
-                if (ml.Column + 1 < _columns && _grid[ml.Row, ml.Column + 1] != Cell.Blocked)
-                    locations.Add(new MazeLocation(ml.Row, ml.Column + 1));
-                if (ml.Column - 1 >= 0 && _grid[ml.Row, ml.Column - 1] != Cell.Blocked)
-                    locations.Add(new MazeLocation(ml.Row, ml.Column - 1));
+                var (row, column) = ml;
+                if (row + 1 < _rows && _grid[row + 1, column] != Cell.Blocked)
+                    locations.Add(new MazeLocation(row + 1, column));
+                if (row - 1 >= 0 && _grid[row - 1, column] != Cell.Blocked)
+                    locations.Add(new MazeLocation(row - 1, column));
+                if (column + 1 < _columns && _grid[row, column + 1] != Cell.Blocked)
+                    locations.Add(new MazeLocation(row, column + 1));
+                if (column - 1 >= 0 && _grid[row, column - 1] != Cell.Blocked)
+                    locations.Add(new MazeLocation(row, column - 1));
                 return locations;
             }
 
@@ -176,10 +181,11 @@ namespace ClassicComputerScienceProblems
              * For our mazes, the difference in x is equivalent to the difference in columns between two maze locations,
              * and the difference in y is equivalent to the difference in rows.
              */
-            public double EuclidianDistance(MazeLocation ml)
+            public double EuclideanDistance(MazeLocation ml)
             {
-                var xDist = ml.Column - _goal.Column;
-                var yDist = ml.Row - _goal.Row;
+                var (row, column) = ml;
+                var xDist = column - _goal.Column;
+                var yDist = row - _goal.Row;
                 return Math.Sqrt(xDist * xDist + yDist * yDist);
             }
 
@@ -193,37 +199,38 @@ namespace ClassicComputerScienceProblems
              * The Manhattan distance is derived by simply finding the difference in rows between two maze locations
              * and summing it with the difference in columns.
              */
-            public double ManhatanDistance(MazeLocation ml)
+            public double ManhattanDistance(MazeLocation ml)
             {
-                var xDist = Math.Abs(ml.Column - _goal.Column);
-                var yDist = Math.Abs(ml.Row - _goal.Row);
+                var (row, column) = ml;
+                var xDist = Math.Abs(column - _goal.Column);
+                var yDist = Math.Abs(row - _goal.Row);
                 return xDist + yDist;
             }
 
             //  We just consider every hop in our maze to be a cost of 1.
             public double MoveCost(MazeLocation ml) => 1;
 
-            public void DeepFirstSearch()
+            public void SolveWithDeepFirstSearch()
             {
-                var node = L2_2_2_GenericSearch.DeepFirstSearch(_start, Goal, Successors);
+                var node = DeepFirstSearch(_start, Goal, Successors);
                 if (node == null) return;
-                var path = L2_2_2_GenericSearch.NodeToPath(node);
+                var path = NodeToPath(node);
                 Mark(path);
             }
 
-            public void BreadthFirstSearch()
+            public void SolveWithBreadthFirstSearch()
             {
-                var node = L2_2_2_GenericSearch.BreadthFirstSearch(_start, Goal, Successors);
+                var node = BreadthFirstSearch(_start, Goal, Successors);
                 if (node == null) return;
-                var path = L2_2_2_GenericSearch.NodeToPath(node);
+                var path = NodeToPath(node);
                 Mark(path);
             }
 
-            public void AStarSearch()
+            public void SolveWithAStarSearch()
             {
-                var node = L2_2_2_GenericSearch.AStarSearch(_start, Goal, Successors, ManhatanDistance, MoveCost);
+                var node = AStarSearch(_start, Goal, Successors, ManhattanDistance, MoveCost);
                 if (node == null) return;
-                var path = L2_2_2_GenericSearch.NodeToPath(node);
+                var path = NodeToPath(node);
                 Mark(path);
             }
 
@@ -255,7 +262,11 @@ namespace ClassicComputerScienceProblems
             public static Cell Start = new(nameof(Start), "S");
             public static Cell Goal = new(nameof(Goal), "G");
             public static Cell Path = new(nameof(Path), "P");
-            private Cell(string name, string value) : base(name, value) { }
+
+            private Cell(string name, string value) : base(name, value)
+            {
+            }
+
             public override string ToString() => Value;
         }
     }

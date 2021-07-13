@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xunit;
+using static ClassicComputerScienceProblems.L3_1_ConstraintSatisfactionProblems;
 
 namespace ClassicComputerScienceProblems
 {
@@ -22,7 +23,7 @@ namespace ClassicComputerScienceProblems
             var words = new List<string>{ "MATTHEW", "JOE", "MARY", "SARAH", "SALLY" };
             // generate domains for all words
             var domains = words.ToDictionary(word => word, word => grid.GenerateDomain(word));
-            var csp = new L3_1_ConstraintSatisfactionProblems.CSP<String, List<GridLocation>>(words, domains);
+            var csp = new CSP<String, List<GridLocation>>(words, domains);
             csp.AddConstraint(new WordSearchConstraint(words));
 
             var solution = csp.BacktrackingSearch();
@@ -155,7 +156,7 @@ namespace ClassicComputerScienceProblems
          * items in a Set converted from a List than there were in the original List, that means the original List
          * contained some duplicates.
          */
-        public class WordSearchConstraint : L3_1_ConstraintSatisfactionProblems.Constraint<string, List<GridLocation>>
+        public class WordSearchConstraint : Constraint<string, List<GridLocation>>
         {
             public List<string> Variables { get; }
 

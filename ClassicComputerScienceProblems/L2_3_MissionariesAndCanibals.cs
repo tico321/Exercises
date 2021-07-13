@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using static ClassicComputerScienceProblems.L2_2_2_GenericSearch;
 
 namespace ClassicComputerScienceProblems
 {
@@ -92,8 +93,8 @@ namespace ClassicComputerScienceProblems
 
             public List<MCState> GetSolution()
             {
-                var node = L2_2_2_GenericSearch.DeepFirstSearch(this, GoalTest, Successors);
-                var path = L2_2_2_GenericSearch.NodeToPath(node);
+                var node = DeepFirstSearch(this, GoalTest, Successors);
+                var path = NodeToPath(node);
                 return path;
             }
         }

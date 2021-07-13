@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using static ClassicComputerScienceProblems.L3_1_ConstraintSatisfactionProblems;
 
 namespace ClassicComputerScienceProblems
 {
@@ -33,7 +34,7 @@ namespace ClassicComputerScienceProblems
 
         // No two adjacent regions can be colored with the same color, so our constraints will be dependent on which
         // regions border one another. We can use what are called binary constraints (constraints between two variables).
-        public class MapColoringConstraint : L3_1_ConstraintSatisfactionProblems.Constraint<string, string>
+        public class MapColoringConstraint : Constraint<string, string>
         {
             private readonly string _place1;
             private readonly string _place2;
@@ -61,7 +62,7 @@ namespace ClassicComputerScienceProblems
         // Fill variables domains and constraints for CSP
         public IDictionary<string, string> Solver()
         {
-            var csp = new L3_1_ConstraintSatisfactionProblems.CSP<String, String>(Variables, Domains);
+            var csp = new CSP<String, String>(Variables, Domains);
             csp.AddConstraint(new MapColoringConstraint("Western Australia", "Northern Territory"));
             csp.AddConstraint(new MapColoringConstraint("Western Australia", "South Australia"));
             csp.AddConstraint(new MapColoringConstraint("South Australia", "Northern Territory"));

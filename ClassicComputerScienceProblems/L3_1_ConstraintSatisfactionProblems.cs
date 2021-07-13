@@ -14,6 +14,14 @@ namespace ClassicComputerScienceProblems
     /// Programming languages like Prolog and Picat have facilities for solving constraint-satisfaction problems built in.
     /// The usual technique in other languages is to build a framework that incorporates a backtracking search and
     /// several heuristics to improve the performance of that search.
+    ///
+    /// They are commonly used in scheduling. Several people need to be at a meeting, and they are the variables.
+    /// The domains consist of the open times on their calendars. The constraints may involve what combinations of
+    /// people are required at the meeting.
+    ///
+    /// Alternatives to backtracking:
+    /// - Adding heuristics with A*
+    /// - Constraint propagation (a newer technique), is also an efficient avenue for real-world applications. 
     /// </summary>
     public class L3_1_ConstraintSatisfactionProblems
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using static ClassicComputerScienceProblems.L3_1_ConstraintSatisfactionProblems;
 
 namespace ClassicComputerScienceProblems
 {
@@ -36,7 +37,7 @@ namespace ClassicComputerScienceProblems
         // different sequential columns to begin with.) Checking for the same row is trivial, but checking for the same
         // diagonal requires a little bit of math. If any two queens are on the same diagonal, the difference between
         // their rows will be the same as the difference between their columns.
-        public class QueensConstraint : L3_1_ConstraintSatisfactionProblems.Constraint<int, int>
+        public class QueensConstraint : Constraint<int, int>
         {
             public QueensConstraint(List<int> variables)
             {
@@ -70,7 +71,7 @@ namespace ClassicComputerScienceProblems
 
         public static IDictionary<int, int> Solve()
         {
-            var csp = new L3_1_ConstraintSatisfactionProblems.CSP<int, int>(Variables, Domain);
+            var csp = new CSP<int, int>(Variables, Domain);
             csp.AddConstraint(new QueensConstraint(Variables));
             var sol = csp.BacktrackingSearch();
             return sol;
