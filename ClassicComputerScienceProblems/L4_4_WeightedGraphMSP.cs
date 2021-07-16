@@ -74,10 +74,9 @@ namespace ClassicComputerScienceProblems
             public WeightedEdge Reversed() => new WeightedEdge(V, U, Weight);
             // compareTo() method is only interested in looking at weights
             // because it needs to find the smallest edge by weight
-            public int CompareTo(WeightedEdge? other)
+            public int CompareTo(WeightedEdge other)
             {
-                if (other == null) return 1;
-                return Weight.CompareTo(other);
+                return other == null ? 1 : Weight.CompareTo(other);
             }
 
             public override string ToString() => $"{U} { Weight } > {V}";

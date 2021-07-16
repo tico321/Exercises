@@ -33,13 +33,13 @@ namespace ClassicComputerScienceProblems
 
             Assert.Equal(2, gene.Codons.Count);
             var c1 = gene.Codons.First();
-            Assert.Equal(c1.N1, Nucleotide.A);
-            Assert.Equal(c1.N2, Nucleotide.C);
-            Assert.Equal(c1.N3, Nucleotide.G);
+            Assert.Equal(Nucleotide.A, c1.N1);
+            Assert.Equal(Nucleotide.C, c1.N2);
+            Assert.Equal(Nucleotide.G, c1.N3);
             var c2 = gene.Codons.Skip(1).First();
-            Assert.Equal(c2.N1, Nucleotide.T);
-            Assert.Equal(c2.N2, Nucleotide.G);
-            Assert.Equal(c2.N2, Nucleotide.G);
+            Assert.Equal(Nucleotide.T, c2.N1);
+            Assert.Equal(Nucleotide.G, c2.N2);
+            Assert.Equal(Nucleotide.G, c2.N2);
         }
 
         [Theory]

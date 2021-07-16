@@ -62,7 +62,7 @@ namespace ClassicComputerScienceProblems
                 }
             }
 
-            public string ToString() {
+            public override string ToString() {
                 var sb = new StringBuilder();
                 for (var i = 0; i < _rows; i++)
                 {
