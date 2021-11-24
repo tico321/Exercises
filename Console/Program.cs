@@ -1,6 +1,7 @@
 ﻿using Exercises.Easy;
 using System;
 
+[assembly: CLSCompliant(true)]
 namespace ConsoleApp
 {
     class Program

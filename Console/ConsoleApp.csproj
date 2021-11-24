@@ -2,7 +2,14 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+
+    <!-- https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#analysismode -->
+    <AnalysisMode>All</AnalysisMode>
+    <!-- https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#codeanalysistreatwarningsaserrors -->
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <!-- https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#enforcecodestyleinbuild -->
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>

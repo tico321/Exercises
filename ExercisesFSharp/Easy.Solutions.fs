@@ -18,3 +18,9 @@ module Solutions =
             | n when n % i = 0L -> i :: (loop i (n/i))
             | _ -> loop (i + 1L) n
         loop 2L number
+
+    type GenericClass<'a> (data: 'a) =
+        member this.get = data
+
+        static member DoSomething () =
+            printf "hello"
