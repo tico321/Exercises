@@ -1,6 +1,5 @@
 namespace Medium
 
-open System.Linq
 open System.Threading.Tasks
 open System.Threading
 
@@ -82,4 +81,3 @@ module Tests =
         match result with
         | Some r -> Assert.True(r, "Wrong result")
         | None -> Assert.True(false, "The solution took too much to execute")
-
