@@ -1,5 +1,12 @@
 ﻿module ExercisesFSharp.AOC2021.day1.problem
 
+open System
+open System.Text
+open Xunit
+open System.IO
+
+open problem_solution
+
 (*
 As the submarine drops below the surface of the ocean, it automatically performs a sonar sweep of the nearby sea floor. On a small screen, the sonar sweep report (your puzzle input) appears: each line is a measurement of the sea floor depth as the sweep looks further and further away from the submarine.
 For example, suppose you had the following report:
@@ -37,13 +44,6 @@ How many measurements are larger than the previous measurement?
 
 *)
 
-open System
-open System.Text
-open Xunit
-open System.IO
-
-open problem_solution
-
 let readFile fileName =
     let path = Path.Combine(Environment.CurrentDirectory, "AOC2021", fileName)
     use reader = new StreamReader(path, Encoding.UTF8)
@@ -58,11 +58,56 @@ let getInputFromFile fileName =
 
 [<Theory>]
 [<InlineData("day1_sample.txt", 7)>]
-[<InlineData("day1_input.txt", 1462)>]
+[<InlineData("day1_input.txt", 1121)>]
 let ``day1 submarine drops`` file expected =
     let input = getInputFromFile file
 
-    let actual = day1SubmarineDrops input
+    let actual = Day1.submarineDrops input
+
+    Assert.Equal(expected, actual)
+
+(*
+--- Part Two ---
+Considering every single measurement isn't as useful as you expected: there's just too much noise in the data.
+
+Instead, consider sums of a three-measurement sliding window. Again considering the above example:
+
+199  A
+200  A B
+208  A B C
+210    B C D
+200  E   C D
+207  E F   D
+240  E F G
+269    F G H
+260      G H
+263        H
+Start by comparing the first and second three-measurement windows. The measurements in the first window are marked A (199, 200, 208); their sum is 199 + 200 + 208 = 607. The second window is marked B (200, 208, 210); its sum is 618. The sum of measurements in the second window is larger than the sum of the first, so this first comparison increased.
+
+Your goal now is to count the number of times the sum of measurements in this sliding window increases from the previous sum. So, compare A with B, then compare B with C, then C with D, and so on. Stop when there aren't enough measurements left to create a new three-measurement sum.
+
+In the above example, the sum of each three-measurement window is as follows:
+
+A: 607 (N/A - no previous sum)
+B: 618 (increased)
+C: 618 (no change)
+D: 617 (decreased)
+E: 647 (increased)
+F: 716 (increased)
+G: 769 (increased)
+H: 792 (increased)
+In this example, there are 5 sums that are larger than the previous sum.
+
+Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?
+*)
+
+[<Theory>]
+[<InlineData("day1_sample.txt", 5)>]
+[<InlineData("day1_input.txt", 1065)>]
+let ``day1 submarine drops part 2`` file expected =
+    let input = getInputFromFile file
+
+    let actual = Day1.submarineDropsPart2 input
 
     Assert.Equal(expected, actual)
 
@@ -138,7 +183,7 @@ let readBingoData fileName =
         str
         |> Array.skip 1
         |> Array.chunkBySize 5
-        |> Array.map Board.FromInput
+        |> Array.map Day4.Board.FromInput
 
     (tickets, boards)
 
@@ -148,7 +193,7 @@ let readBingoData fileName =
 let ``day4 bingo`` fileName expected =
     let tickets, boards = readBingoData fileName
 
-    let actual = solveBingo (tickets |> Array.toList) (boards |> Array.toList)
+    let actual = Day4.bingo (tickets |> Array.toList) (boards |> Array.toList)
 
     Assert.Equal(expected, actual |> snd)
 
@@ -167,6 +212,6 @@ In the above example, the second board is the last to win, which happens after 1
 let ``day4 bingo 2`` fileName expected =
     let tickets, boards = readBingoData fileName
 
-    let actual = solveBingo2 (tickets |> Array.toList) (boards |> Array.toList)
+    let actual = Day4.bingoPart2 (tickets |> Array.toList) (boards |> Array.toList)
 
     Assert.Equal(expected, actual |> snd)
