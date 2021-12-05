@@ -21,6 +21,53 @@ module Day1 =
         |> Seq.map Seq.sum
         |> submarineDrops
 
+module Day2 =
+    type Command =
+        | Forward of int
+        | Down of int
+        | Up of int
+
+    let strToCommand (str: string) =
+        match str.Split(" ") with
+        | [| command; n |] ->
+            match command, Int32.TryParse n with
+            | "forward", (true, number) -> Forward number |> Some
+            | "down", (true, number) -> Down number |> Some
+            | "up", (true, number) -> Up number |> Some
+            | _ -> None
+        | _ -> None
+
+    let toCommands input =
+        input
+            |> Seq.map strToCommand
+            |> Seq.choose id
+
+    let dive (input: string seq) =
+        let commands = input |> toCommands
+
+        let next (currentPosition: int*int) command =
+            let (horizontal, depth) = currentPosition;
+            match command with
+            | Forward n -> (horizontal + n, depth)
+            | Down n -> (horizontal, depth + n)
+            | Up n -> (horizontal, depth - n)
+
+        let horizontal, depth = commands |> Seq.fold next (0,0)
+        horizontal * depth
+
+    let divePart2 (input: string seq) =
+        let commands = input |> toCommands
+
+        let next (currentPosition: int*int*int) command =
+            let (horizontal, depth, aim) = currentPosition;
+            match command with
+            | Forward n -> (horizontal + n, depth + aim * n, aim)
+            | Down n -> (horizontal, depth, aim + n)
+            | Up n -> (horizontal, depth, aim - n)
+
+        let horizontal, depth, _ = commands |> Seq.fold next (0,0,0)
+        horizontal * depth
+
 module Day4 =
 
     type Board =
