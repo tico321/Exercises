@@ -179,7 +179,7 @@ let readBingoData fileName =
         str
         |> Seq.skip 1
         |> Seq.chunkBySize 5
-        |> Seq.map Day4.Board.FromInput
+        |> Seq.map Day4.Board.create
 
     (tickets, boards)
 

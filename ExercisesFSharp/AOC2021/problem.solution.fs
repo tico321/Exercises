@@ -2,6 +2,7 @@
 
 open System
 open System.Linq
+open ExercisesFSharp.AOC2021
 
 module Day1 =
 
@@ -25,7 +26,8 @@ module Day4 =
     type Board =
         { rows: (int*bool) list list; cols: (int*bool) list list }
 
-        member this.Mark (number: int) =
+    module Board =
+        let markNumber (number: int) board =
             let mark list =
                 list
                 |> List.map (fun row ->
@@ -35,55 +37,52 @@ module Day4 =
                         if n = number then (n, true)
                         else i))
 
-            { this with rows = this.rows |> mark; cols = this.cols |> mark }
+            { board with rows = board.rows |> mark; cols = board.cols |> mark }
 
-        member this.UnmarkedSum () =
-            this.rows
+        let unmarkedSum board =
+            board.rows
             |> List.map (fun r ->
                 r
                 |> List.filter (snd >> not)
                 |> List.sumBy fst)
             |> List.sum
 
-        member this.CheckWinCondition () =
-            let any =
-                this.rows @ this.cols
+        let checkWinCondition board =
+            let winConditions =
+                board.rows @ board.cols
                 |> List.map (fun r -> r |> List.filter snd)
                 |> List.filter (fun r -> r.Length = 5)
-            any.Length > 0
+            winConditions.Length > 0
 
-        static member FromInput (input: string []) =
+        let create (input: string []) =
             let rows =
                 input
                 |> Array.map (fun line ->
-                    line.Split(" ")
-                    |> Array.filter (Int32.TryParse >> fst)
-                    |> Array.map int
-                    |> Array.map (fun i -> (i, false))
-                    |> Array.toList)
+                    line
+                    |> InputUtils.splitLineToInts " "
+                    |> Seq.map (fun i -> (i, false))
+                    |> Seq.toList)
                 |> Array.toList
 
-            let c =
-                [ for i in 0 .. 4 do
-                  for j in 0 .. 4 -> rows[j][i] ]
             let cols =
-                c
-                |> List.chunkBySize 5
+                [ for i in 0 .. 4 do
+                  [ for j in 0 .. 4 -> rows[j][i]] ]
 
             { rows = rows; cols = cols }
 
     let bingo (tickets: int seq) (boards: Board seq) =
-        let rec iterate (bs: Board seq, res: int) ticket =
+        let iterate (bs: Board seq, res: int) ticket =
             if res > 0 then (bs, res)
             else
-            let newBoards = bs |> Seq.map (fun b -> b.Mark ticket)
+            let newBoards = bs |> Seq.map (Board.markNumber ticket)
             let winningBoards =
                 newBoards
-                |> Seq.filter (fun b -> b.CheckWinCondition())
+                |> Seq.filter Board.checkWinCondition
                 |> Seq.toList
 
             if winningBoards.Length > 0 then
-                newBoards, winningBoards[0].UnmarkedSum() * ticket
+                let unmarked = Board.unmarkedSum winningBoards[0]
+                newBoards, unmarked * ticket
             else
                 (newBoards, 0)
 
@@ -91,23 +90,23 @@ module Day4 =
         |> Seq.fold iterate (boards, 0)
 
     let bingoPart2 (tickets: int seq) (boards: Board seq) =
-        let rec iterate (acc: Board seq * Board seq, res: int) ticket =
+        let iterate (acc: Board seq * Board seq, res: int) ticket =
             let boards, _ = acc;
             if res > 0 then (acc, res)
             else
-            let updatedBoards = boards |> Seq.map (fun b -> b.Mark ticket)
+            let updatedBoards = boards |> Seq.map (Board.markNumber ticket)
             let newBoards =
                 updatedBoards
-                |> Seq.filter (fun b -> b.CheckWinCondition() |> not)
+                |> Seq.filter (fun b -> Board.checkWinCondition b |> not)
                 |> Seq.toList
             let winningBoards =
                 updatedBoards
-                |> Seq.filter (fun b -> b.CheckWinCondition())
+                |> Seq.filter Board.checkWinCondition
                 |> Seq.toList
 
             if newBoards.Length = 0 then
-                (newBoards, winningBoards),
-                winningBoards.[winningBoards.Length-1].UnmarkedSum() * ticket
+                let unmarked = Board.unmarkedSum winningBoards.[winningBoards.Length-1]
+                (newBoards, winningBoards), unmarked * ticket
             else
                 ((newBoards, winningBoards), 0)
 
