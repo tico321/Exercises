@@ -22,6 +22,7 @@
     <Compile Include="Easy.fs" />
     <Compile Include="Medium.Solutions.fs" />
     <Compile Include="Medium.fs" />
+    <Compile Include="AOC2021\InputUtils.fs" />
     <Compile Include="AOC2021\problem.solution.fs" />
     <Compile Include="AOC2021\problem.fs" />
     <Content Include="AOC2021\day1_sample.txt">

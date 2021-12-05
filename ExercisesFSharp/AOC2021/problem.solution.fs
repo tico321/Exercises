@@ -1,30 +1,24 @@
 ﻿module ExercisesFSharp.AOC2021.day1.problem_solution
 
 open System
+open System.Linq
 
 module Day1 =
 
     let submarineDrops input =
         input
         |> Seq.windowed 2
-        |> Seq.fold
-            (fun acc window ->
-            match window with
-            | [| a; b |] -> if b > a then (acc + 1) else acc
-            | _ -> acc)
-            0
+        |> Seq.map (fun ab ->
+            match ab with
+            | [| a; b |] when b > a -> 1
+            | _ -> 0)
+        |> Seq.sum
 
     let submarineDropsPart2 (input: int seq) =
         input
         |> Seq.windowed 3
         |> Seq.map Seq.sum
-        |> Seq.windowed 2
-        |> Seq.fold
-            (fun acc window ->
-            match window with
-            | [| a; b |] -> if b > a then (acc + 1) else acc
-            | _ -> acc)
-            0
+        |> submarineDrops
 
 module Day4 =
 
@@ -78,14 +72,15 @@ module Day4 =
 
             { rows = rows; cols = cols }
 
-    let bingo (tickets: int list) (boards: Board list) =
-        let rec iterate (bs: Board list, res: int) ticket =
+    let bingo (tickets: int seq) (boards: Board seq) =
+        let rec iterate (bs: Board seq, res: int) ticket =
             if res > 0 then (bs, res)
             else
-            let newBoards = bs |> List.map (fun b -> b.Mark ticket)
+            let newBoards = bs |> Seq.map (fun b -> b.Mark ticket)
             let winningBoards =
                 newBoards
-                |> List.filter (fun b -> b.CheckWinCondition())
+                |> Seq.filter (fun b -> b.CheckWinCondition())
+                |> Seq.toList
 
             if winningBoards.Length > 0 then
                 newBoards, winningBoards[0].UnmarkedSum() * ticket
@@ -93,20 +88,22 @@ module Day4 =
                 (newBoards, 0)
 
         tickets
-        |> List.fold iterate (boards, 0)
+        |> Seq.fold iterate (boards, 0)
 
-    let bingoPart2 (tickets: int list) (boards: Board list) =
-        let rec iterate (acc: Board list * Board list, res: int) ticket =
+    let bingoPart2 (tickets: int seq) (boards: Board seq) =
+        let rec iterate (acc: Board seq * Board seq, res: int) ticket =
             let boards, _ = acc;
             if res > 0 then (acc, res)
             else
-            let updatedBoards = boards |> List.map (fun b -> b.Mark ticket)
+            let updatedBoards = boards |> Seq.map (fun b -> b.Mark ticket)
             let newBoards =
                 updatedBoards
-                |> List.filter (fun b -> b.CheckWinCondition() |> not)
+                |> Seq.filter (fun b -> b.CheckWinCondition() |> not)
+                |> Seq.toList
             let winningBoards =
                 updatedBoards
-                |> List.filter (fun b -> b.CheckWinCondition())
+                |> Seq.filter (fun b -> b.CheckWinCondition())
+                |> Seq.toList
 
             if newBoards.Length = 0 then
                 (newBoards, winningBoards),
@@ -115,4 +112,4 @@ module Day4 =
                 ((newBoards, winningBoards), 0)
 
         tickets
-        |> List.fold iterate ((boards, []), 0)
+        |> Seq.fold iterate ((boards, []), 0)

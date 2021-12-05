@@ -1,10 +1,10 @@
 ﻿module ExercisesFSharp.AOC2021.day1.problem
 
 open System
-open System.Text
+open ExercisesFSharp.AOC2021
 open Xunit
-open System.IO
 
+open InputUtils
 open problem_solution
 
 (*
@@ -44,23 +44,14 @@ How many measurements are larger than the previous measurement?
 
 *)
 
-let readFile fileName =
-    let path = Path.Combine(Environment.CurrentDirectory, "AOC2021", fileName)
-    use reader = new StreamReader(path, Encoding.UTF8)
-    reader.ReadToEnd()
-
-let getInputFromFile fileName =
-    let strContent = readFile fileName
-    strContent.Split(Environment.NewLine)
-    |> Array.toSeq
-    |> Seq.filter (Int32.TryParse >> fst)
-    |> Seq.map int
-
 [<Theory>]
 [<InlineData("day1_sample.txt", 7)>]
 [<InlineData("day1_input.txt", 1121)>]
 let ``day1 submarine drops`` file expected =
-    let input = getInputFromFile file
+    let input =
+        readFile file
+        |> Seq.map strToInt
+        |> Seq.choose id
 
     let actual = Day1.submarineDrops input
 
@@ -105,7 +96,10 @@ Consider sums of a three-measurement sliding window. How many sums are larger th
 [<InlineData("day1_sample.txt", 5)>]
 [<InlineData("day1_input.txt", 1065)>]
 let ``day1 submarine drops part 2`` file expected =
-    let input = getInputFromFile file
+    let input =
+        readFile file
+        |> Seq.map strToInt
+        |> Seq.choose id
 
     let actual = Day1.submarineDropsPart2 input
 
@@ -170,20 +164,22 @@ To guarantee victory against the giant squid, figure out which board will win fi
 
 *)
 
+open System.Linq
+
 let readBingoData fileName =
     let str =
-        (readFile fileName).Split(Environment.NewLine)
-        |> Array.filter (String.IsNullOrEmpty >> not)
+        readFile fileName
+        |> Seq.filter (not << String.IsNullOrEmpty)
 
     let tickets =
-        str[0].Split(",")
-        |> Array.map int
+        str.First()
+        |> splitLineToInts ","
 
     let boards =
         str
-        |> Array.skip 1
-        |> Array.chunkBySize 5
-        |> Array.map Day4.Board.FromInput
+        |> Seq.skip 1
+        |> Seq.chunkBySize 5
+        |> Seq.map Day4.Board.FromInput
 
     (tickets, boards)
 
@@ -193,7 +189,7 @@ let readBingoData fileName =
 let ``day4 bingo`` fileName expected =
     let tickets, boards = readBingoData fileName
 
-    let actual = Day4.bingo (tickets |> Array.toList) (boards |> Array.toList)
+    let actual = Day4.bingo tickets boards
 
     Assert.Equal(expected, actual |> snd)
 
@@ -212,6 +208,6 @@ In the above example, the second board is the last to win, which happens after 1
 let ``day4 bingo 2`` fileName expected =
     let tickets, boards = readBingoData fileName
 
-    let actual = Day4.bingoPart2 (tickets |> Array.toList) (boards |> Array.toList)
+    let actual = Day4.bingoPart2 tickets boards
 
     Assert.Equal(expected, actual |> snd)
