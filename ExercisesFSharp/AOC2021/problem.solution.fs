@@ -8,11 +8,8 @@ module Day1 =
 
     let submarineDrops input =
         input
-        |> Seq.windowed 2
-        |> Seq.map (fun ab ->
-            match ab with
-            | [| a; b |] when b > a -> 1
-            | _ -> 0)
+        |> Seq.pairwise
+        |> Seq.map (fun (a, b) -> if b > a then 1 else 0)
         |> Seq.sum
 
     let submarineDropsPart2 (input: int seq) =
@@ -117,13 +114,12 @@ module Day4 =
     module Board =
         let markNumber (number: int) board =
             let mark list =
-                list
-                |> List.map (fun row ->
-                    row
-                    |> List.map (fun i ->
-                        let n = (i |> fst)
-                        if n = number then (n, true)
-                        else i))
+                 [ for row in list do [
+                    for col in row do
+                        if (col |> fst) = number then (number, true)
+                          else col
+                      ]
+                 ]
 
             { board with rows = board.rows |> mark; cols = board.cols |> mark }
 
@@ -159,23 +155,17 @@ module Day4 =
             { rows = rows; cols = cols }
 
     let bingo (tickets: int seq) (boards: Board seq) =
-        let iterate (bs: Board seq, res: int) ticket =
-            if res > 0 then (bs, res)
-            else
-            let newBoards = bs |> Seq.map (Board.markNumber ticket)
-            let winningBoards =
-                newBoards
-                |> Seq.filter Board.checkWinCondition
-                |> Seq.toList
+        let rec iterate (bs: Board seq) tickets =
+            match tickets with
+            | [] -> failwith "Invalid input data"
+            | ticket::ts ->
+                let newBoards = bs |> Seq.map (Board.markNumber ticket)
 
-            if winningBoards.Length > 0 then
-                let unmarked = Board.unmarkedSum winningBoards[0]
-                newBoards, unmarked * ticket
-            else
-                (newBoards, 0)
+                match Seq.tryFind Board.checkWinCondition newBoards with
+                | Some winner -> Board.unmarkedSum winner * ticket
+                | None -> iterate newBoards ts
 
-        tickets
-        |> Seq.fold iterate (boards, 0)
+        iterate boards (tickets |> Seq.toList)
 
     let bingoPart2 (tickets: int seq) (boards: Board seq) =
         let iterate (acc: Board seq * Board seq, res: int) ticket =

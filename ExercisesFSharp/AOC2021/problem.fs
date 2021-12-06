@@ -368,7 +368,7 @@ let ``day4 bingo`` fileName expected =
 
     let actual = Day4.bingo tickets boards
 
-    Assert.Equal(expected, actual |> snd)
+    Assert.Equal(expected, actual)
 
 (*
 --- Day 4 ---

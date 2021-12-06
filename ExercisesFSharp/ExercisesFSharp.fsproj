@@ -8,11 +8,11 @@
 
     <!-- https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/errors-warnings#treatwarningsaserrors -->
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    
+
     <!-- enable all CA Code quality rules https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/   -->
     <!-- https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#analysismode -->
     <AnalysisMode>All</AnalysisMode>
-    
+
     <!-- https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#enforcecodestyleinbuild -->
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
