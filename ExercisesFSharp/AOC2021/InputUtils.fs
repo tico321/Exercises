@@ -5,7 +5,7 @@ open System.IO
 open System.Text
 
 let readFile fileName =
-    let path = Path.Combine(Environment.CurrentDirectory, "AOC2021", fileName)
+    let path = Path.Combine(Environment.CurrentDirectory, "AOC2021\input", fileName)
     File.ReadAllLines(path, Encoding.UTF8)
     |> Array.toSeq
 
