@@ -43,7 +43,23 @@ let binaryDiagnostic input =
     let epsilon = Convert.ToInt32(strEpsilon, 2)
     gama * epsilon
 
-let binaryDiagnosticPart2 _ = 230 //TODO
+
+
+let binaryDiagnosticPart2 input =
+    let rec findEntry bit_selection_criteria bit_position (input: string list) =
+       let total, numOnes = input |> List.map (Seq.item bit_position) |> (fun x -> (List.length x, x |> List.where (fun item -> item = '1') |> List.length))
+       let bitToSelectOn = if bit_selection_criteria (numOnes * 2) total then '1' else '0'
+       let list = (input |> List.where (fun x -> x.Chars bit_position = bitToSelectOn ) )
+
+       match list with
+       | [] -> failwith "oops"
+       | [item] -> item
+       | rest -> findEntry bit_selection_criteria (bit_position+1) rest
+
+    let oxygenGeneratorRating = Convert.ToInt32(findEntry (>=) 0 input, 2)
+    let c02ScrubberRating = Convert.ToInt32(findEntry (<) 0 input, 2)
+
+    oxygenGeneratorRating * c02ScrubberRating
 
 [<Theory>]
 [<InlineData("day3_sample.txt", 198)>]
@@ -57,9 +73,9 @@ let ``day3 binary diagnostic`` file expected =
 
 [<Theory>]
 [<InlineData("day3_sample.txt", 230)>]
-//[<InlineData("day3_input.txt", 3959450)>]
+[<InlineData("day3_input.txt", 7440311)>]
 let ``day3 binary diagnostic part2`` file expected =
-    let input = readFile file
+    let input = readFile file |> Seq.toList
 
     let actual = binaryDiagnosticPart2 input
 
