@@ -26,15 +26,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="AOC2021\InputUtils.fs" />
-    <Compile Include="AOC2021\Day1.fs" />
-    <Compile Include="AOC2021\Day2.fs" />
-    <Compile Include="AOC2021\Day3.fs" />
-    <Compile Include="AOC2021\Day4.fs" />
-    <Compile Include="AOC2021\Day5.fs" />
-    <Compile Include="AOC2021\Day6.fs" />
-    <Compile Include="AOC2021\Day7.fs" />
-    <Compile Include="AOC2021\Day8.fs" />
-    <Compile Include="AOC2021\Day9.fs" />
+    <Compile Include="AOC2021\Day01.fs" />
+    <Compile Include="AOC2021\Day02.fs" />
+    <Compile Include="AOC2021\Day03.fs" />
+    <Compile Include="AOC2021\Day04.fs" />
+    <Compile Include="AOC2021\Day05.fs" />
+    <Compile Include="AOC2021\Day06.fs" />
+    <Compile Include="AOC2021\Day07.fs" />
+    <Compile Include="AOC2021\Day08.fs" />
+    <Compile Include="AOC2021\Day09.fs" />
     <Compile Include="AOC2021\Day10.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
