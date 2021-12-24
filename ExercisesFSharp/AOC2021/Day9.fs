@@ -1,4 +1,5 @@
-﻿module ExercisesFSharp.AOC2021.Day9
+﻿// https://adventofcode.com/2021/day/9
+module ExercisesFSharp.AOC2021.Day9
 
 open FSharpPlus.Control
 open Microsoft.FSharp.Collections

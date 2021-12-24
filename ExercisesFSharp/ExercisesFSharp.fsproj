@@ -35,6 +35,7 @@
     <Compile Include="AOC2021\Day7.fs" />
     <Compile Include="AOC2021\Day8.fs" />
     <Compile Include="AOC2021\Day9.fs" />
+    <Compile Include="AOC2021\Day10.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   
