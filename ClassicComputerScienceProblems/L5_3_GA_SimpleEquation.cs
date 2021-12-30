@@ -21,7 +21,7 @@ namespace ClassicComputerScienceProblems
         /// In other words, what values for x and y in that equation will yield the largest number.
         /// By using simple calculus we know the values are x = 3 and y = 2
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Takes too long")]
         public void MaximizeEquationSimpleTest()
         {
             var populationSize = 20;

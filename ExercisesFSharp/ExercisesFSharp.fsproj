@@ -18,6 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="BowlingKata.fs" />
     <Compile Include="Easy.Solutions.fs" />
     <Compile Include="Easy.fs" />
     <Compile Include="Medium.Solutions.fs" />
