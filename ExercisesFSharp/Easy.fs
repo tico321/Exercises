@@ -26,3 +26,18 @@ module Tests =
         let actual = primeFactors n |> List.toArray
 
         Assert.Equal<int64[]>(expected, actual)
+
+    // Fibonacci pos
+    // 0 1 1 2 3 5 8 ... is the fibonacci sequence
+    // get the n element starting on 1
+    [<Theory>]
+    [<InlineData(1, 0)>]
+    [<InlineData(2, 1)>]
+    [<InlineData(3, 1)>]
+    [<InlineData(4, 2)>]
+    [<InlineData(5, 3)>]
+    [<InlineData(6, 5)>]
+    [<InlineData(7, 8)>]
+    [<InlineData(40, 63245986)>]
+    let ``Fibonacci n`` pos expected =
+        Assert.Equal(expected, fibonacciPos pos)
