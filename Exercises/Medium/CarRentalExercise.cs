@@ -121,6 +121,31 @@ namespace Exercises.Medium
         }
 
         [Fact]
+        public void Renting_with_dates_with_end_in_the_middle_of_other_renting_range()
+        {
+            // Arrange
+            var panda = new Car()
+            {
+                Cost = 30,
+                Name = "panda",
+                IsRented = true,
+                DaysRented = 4,
+                RentedDate = new DateTime(2022, 03, 28)
+            };
+            var carRental = new CarRental(new List<Car>{ panda  });
+            var rentingStartDate = new DateTime(2022, 03, 25); // before the panda rented day
+            var rentingDays = 5; // makes the end date be in the range of the already rented day
+
+
+            // Act
+            var rentedOnDateResponse = carRental.RentOnDate(panda, rentingStartDate, rentingDays);
+
+            // Assert
+            Assert.False(rentedOnDateResponse.RentedSuccessfully);
+            Assert.Empty(rentedOnDateResponse.AvailableAlternatives); // no other available cars
+        }
+
+        [Fact]
         public void Get_cost()
         {
             // Arrange
@@ -214,12 +239,12 @@ namespace Exercises.Medium
             }
 
             var end = start.AddDays(days);
-            if (start < alreadyRentedStart && end < alreadyRentedEnd)
+            if (start < alreadyRentedStart && end < alreadyRentedStart)
             {
-                return true;
+                return true; // is available
             }
 
-            return false;
+            return false; // is rented
         }
 
         public int GetCost()
