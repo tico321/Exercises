@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -27,9 +28,8 @@ namespace Exercises.Medium
         [InlineData(new[]{ 1, 1, 3, 2, 8, 4, 8, 10 }, 3)]
         public void Test(int[] arr, int expected)
         {
-            int actual = Solve(arr);
-
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected, Solve(arr));
+            Assert.Equal(expected, Solve2(arr));
         }
 
         private int Solve(int[] arr)
@@ -72,6 +72,33 @@ namespace Exercises.Medium
             }
 
             return longest;
+        }
+
+        private int Solve2(int[] arr)
+        {
+            int l = arr.Length;
+            int maxLength = 0;
+            for (int i=0; i< l-1; i++)
+            {
+                HashSet<int> subArray = new();
+                subArray.Add(arr[i]);
+                int min = arr[i];
+                int max = arr[i];
+                for (int j=i+1; j<l; j++)
+                {
+                    if (subArray.Contains(arr[j]))
+                        break;
+
+                    subArray.Add(arr[j]);
+                    min = Math.Min(min, arr[j]);
+                    max = Math.Max(max, arr[j]);
+
+                    int windowsLength = j - i;
+                    if (max-min == windowsLength)
+                        maxLength = Math.Max(maxLength, max-min+1);
+                }
+            }
+            return maxLength;
         }
     }
 }
